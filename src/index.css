@@ -1,0 +1,528 @@
+/* 1. IMPORTACIONES WEB SIEMPRE PRIMERO */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap");
+
+/* 2. LUEGO TAILWIND */
+@import "tailwindcss";
+
+/* ============================================================
+   NODO — DESIGN SYSTEM v2
+   Fuente de la verdad: tokens semánticos por concepto
+   ============================================================ */
+
+@layer base {
+  :root {
+    font-size: 14px;
+
+    /* --- NEUTROS ESTRUCTURALES --- */
+    --nodo-white: #ffffff;
+    --nodo-bg-page: #ffffff;
+    --nodo-border: #111111;
+    --nodo-border-light: #ececea;
+    --nodo-border-mid: #e0e0dc;
+
+    /* Superficies neutras (encabezados, fondos de tabla, strips) */
+    --nodo-surface-head: #e8e8e4; /* encabezado de card neutro */
+    --nodo-surface-body: #f2f2ee; /* cuerpo de card neutro / fondo de tabla */
+
+    /* --- COMERCIANTE (azul) --- */
+    --nodo-merchant-head: #dbeafe; /* encabezado chip/topbar */
+    --nodo-merchant-accent: #3b82f6; /* punto de modo */
+    --nodo-merchant-text: #1e3a8a; /* texto sobre fondo azul */
+    --nodo-merchant-muted: #60a5fa; /* label secundario sobre azul */
+    --nodo-merchant-action: #1d4ed8; /* botones, links */
+
+    /* --- PROVEEDOR (esmeralda) --- */
+    --nodo-provider-head: #d1fae5;
+    --nodo-provider-accent: #10b981;
+    --nodo-provider-text: #064e3b;
+    --nodo-provider-muted: #34d399;
+    --nodo-provider-action: #065f46;
+
+    /* --- ESTADO: AL DÍA (verde) --- */
+    --nodo-ok-head: #86efac; /* encabezado card / tag */
+    --nodo-ok-body: #dcfce7; /* cuerpo card */
+    --nodo-ok-text: #14532d; /* texto primario */
+    --nodo-ok-sub: #166534; /* texto secundario */
+
+    /* --- ESTADO: PENDIENTE (ámbar) --- */
+    --nodo-warn-head: #fcd34d;
+    --nodo-warn-body: #fef9c3;
+    --nodo-warn-text: #78350f;
+    --nodo-warn-sub: #92400e;
+
+    /* --- ESTADO: VENCIDO / DEUDA (rojo) --- */
+    --nodo-danger-head: #fda4af;
+    --nodo-danger-body: #ffe4e6;
+    --nodo-danger-text: #881337;
+    --nodo-danger-sub: #9f1239;
+  }
+
+  body {
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      sans-serif;
+    @apply bg-white text-black antialiased;
+  }
+
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@layer components {
+  /* ============================================================
+     1. ESTRUCTURA BASE
+     ============================================================ */
+
+  /* Línea negra como único separador — sin sombras, sin radius */
+  .nodo-line {
+    border: 1px solid var(--nodo-border);
+  }
+
+  /* ============================================================
+     2. TOPBAR — banda de información superior
+     ============================================================ */
+
+  .nodo-topbar {
+    @apply flex items-stretch;
+    height: 56px;
+    border-bottom: 1px solid var(--nodo-border);
+  }
+
+  /* Cada celda del topbar es un compartimento separado */
+  .nodo-topbar-cell {
+    @apply flex items-center;
+    padding: 0 26px;
+    border-right: 1px solid var(--nodo-border);
+  }
+
+  .nodo-topbar-cell:last-child {
+    border-right: none;
+    margin-left: auto;
+  }
+
+  /* Celda de modo activo: toma el color del rol */
+  .nodo-topbar-mode-merchant {
+    background: var(--nodo-merchant-head);
+  }
+
+  .nodo-topbar-mode-provider {
+    background: var(--nodo-provider-head);
+  }
+
+  /* Labels dentro del topbar */
+  .nodo-topbar-label {
+    @apply block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 2px;
+  }
+
+  .nodo-topbar-value {
+    @apply block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #111;
+  }
+
+  /* Sobre fondo de modo */
+  .nodo-topbar-mode-merchant .nodo-topbar-label {
+    color: var(--nodo-merchant-muted);
+  }
+  .nodo-topbar-mode-merchant .nodo-topbar-value {
+    color: var(--nodo-merchant-text);
+  }
+  .nodo-topbar-mode-provider .nodo-topbar-label {
+    color: var(--nodo-provider-muted);
+  }
+  .nodo-topbar-mode-provider .nodo-topbar-value {
+    color: var(--nodo-provider-text);
+  }
+
+  /* ============================================================
+     3. SIDEBAR ICÓNICO
+     ============================================================ */
+
+  .nodo-sidebar {
+    @apply flex flex-col items-center;
+    width: 56px;
+    background: var(--nodo-white);
+    border-right: 1px solid var(--nodo-border);
+    padding: 20px 0;
+    gap: 32px;
+    flex-shrink: 0;
+  }
+
+  .nodo-sidebar-logo {
+    @apply flex items-center justify-center;
+    width: 26px;
+    height: 26px;
+    border: 1.5px solid var(--nodo-border);
+    border-radius: 50%;
+  }
+
+  .nodo-sidebar-logo-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--nodo-border);
+    border-radius: 50%;
+  }
+
+  .nodo-sidebar-icon {
+    width: 17px;
+    height: 17px;
+    opacity: 0.18;
+    cursor: pointer;
+  }
+
+  .nodo-sidebar-icon.active {
+    opacity: 1;
+  }
+
+  /* ============================================================
+     4. CARDS CON ENCABEZADO ANCLADO
+     Cada card tiene dos zonas:
+     - .nodo-card-head  → fondo más oscuro, título anclado
+     - .nodo-card-body  → fondo suave, dato principal
+     ============================================================ */
+
+  .nodo-card {
+    border: 1px solid var(--nodo-border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .nodo-card-head {
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--nodo-border);
+  }
+
+  .nodo-card-head-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .nodo-card-body {
+    padding: 20px 18px;
+    flex: 1;
+  }
+
+  .nodo-card-value {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .nodo-card-sub {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  /* VARIANTE NEUTRAL */
+  .nodo-card-neutral .nodo-card-head {
+    background: var(--nodo-surface-head);
+  }
+  .nodo-card-neutral .nodo-card-head-label {
+    color: #444;
+  }
+  .nodo-card-neutral .nodo-card-body {
+    background: var(--nodo-surface-body);
+  }
+  .nodo-card-neutral .nodo-card-value {
+    color: #111;
+  }
+  .nodo-card-neutral .nodo-card-sub {
+    color: #777;
+  }
+
+  /* VARIANTE OK (verde) */
+  .nodo-card-ok .nodo-card-head {
+    background: var(--nodo-ok-head);
+  }
+  .nodo-card-ok .nodo-card-head-label {
+    color: var(--nodo-ok-text);
+  }
+  .nodo-card-ok .nodo-card-body {
+    background: var(--nodo-ok-body);
+  }
+  .nodo-card-ok .nodo-card-value {
+    color: var(--nodo-ok-text);
+  }
+  .nodo-card-ok .nodo-card-sub {
+    color: var(--nodo-ok-sub);
+  }
+
+  /* VARIANTE WARN (ámbar) */
+  .nodo-card-warn .nodo-card-head {
+    background: var(--nodo-warn-head);
+  }
+  .nodo-card-warn .nodo-card-head-label {
+    color: var(--nodo-warn-text);
+  }
+  .nodo-card-warn .nodo-card-body {
+    background: var(--nodo-warn-body);
+  }
+  .nodo-card-warn .nodo-card-value {
+    color: var(--nodo-warn-text);
+  }
+  .nodo-card-warn .nodo-card-sub {
+    color: var(--nodo-warn-sub);
+  }
+
+  /* VARIANTE DANGER (rojo) */
+  .nodo-card-danger .nodo-card-head {
+    background: var(--nodo-danger-head);
+  }
+  .nodo-card-danger .nodo-card-head-label {
+    color: var(--nodo-danger-text);
+  }
+  .nodo-card-danger .nodo-card-body {
+    background: var(--nodo-danger-body);
+  }
+  .nodo-card-danger .nodo-card-value {
+    color: var(--nodo-danger-text);
+  }
+  .nodo-card-danger .nodo-card-sub {
+    color: var(--nodo-danger-sub);
+  }
+
+  /* ============================================================
+     5. STATUS TAGS — fondo sólido, sin borde, sin radius
+     ============================================================ */
+
+  .nodo-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .nodo-tag-ok {
+    background: var(--nodo-ok-head);
+    color: var(--nodo-ok-text);
+  }
+  .nodo-tag-warn {
+    background: var(--nodo-warn-head);
+    color: var(--nodo-warn-text);
+  }
+  .nodo-tag-danger {
+    background: var(--nodo-danger-head);
+    color: var(--nodo-danger-text);
+  }
+
+  /* ============================================================
+     6. AVATARES DE EMPRESA — único elemento con círculo
+     ============================================================ */
+
+  .nodo-avatar {
+    @apply flex items-center justify-center flex-shrink-0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  .nodo-avatar-merchant {
+    background: #bfdbfe;
+    color: #1e3a8a;
+  }
+  .nodo-avatar-warn {
+    background: var(--nodo-warn-head);
+    color: var(--nodo-warn-text);
+  }
+  .nodo-avatar-ok {
+    background: var(--nodo-ok-head);
+    color: var(--nodo-ok-text);
+  }
+  .nodo-avatar-neutral {
+    background: var(--nodo-surface-head);
+    color: #444;
+  }
+
+  /* ============================================================
+     7. TABLA CON ENCABEZADO ANCLADO
+     ============================================================ */
+
+  .nodo-table-card {
+    border: 1px solid var(--nodo-border);
+    overflow: hidden;
+  }
+
+  .nodo-table-header {
+    @apply flex items-stretch;
+    border-bottom: 1px solid var(--nodo-border);
+  }
+
+  .nodo-table-header-title {
+    @apply flex items-center;
+    padding: 10px 20px;
+    background: var(--nodo-surface-head);
+    border-right: 1px solid var(--nodo-border);
+    gap: 10px;
+  }
+
+  .nodo-table-header-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #444;
+  }
+
+  .nodo-table-header-count {
+    font-size: 9px;
+    font-weight: 700;
+    color: #888;
+  }
+
+  .nodo-table-header-actions {
+    @apply flex items-center;
+    gap: 16px;
+    padding: 0 20px;
+    margin-left: auto;
+    background: var(--nodo-surface-body);
+  }
+
+  /* ============================================================
+     8. BOTONES — siempre legibles, nunca dependen del hover
+     ============================================================ */
+
+  /* Acción principal de texto (links de tabla, strips) */
+  .nodo-action {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--nodo-merchant-action);
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Botón primario (negro sólido) */
+  .nodo-btn-primary {
+    @apply flex items-center justify-center gap-2;
+    padding: 10px 20px;
+    background: #111;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1px solid #111;
+    cursor: pointer;
+  }
+
+  /* Botón secundario (outline) */
+  .nodo-btn-outline {
+    @apply flex items-center justify-center gap-2;
+    padding: 10px 20px;
+    background: var(--nodo-white);
+    color: #111;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1px solid var(--nodo-border);
+    cursor: pointer;
+  }
+
+  /* ============================================================
+     9. STRIP DE RED / INFORMACIÓN HORIZONTAL
+     Estructura: [encabezado | cuerpo | acción]
+     ============================================================ */
+
+  .nodo-strip {
+    border: 1px solid var(--nodo-border);
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+  }
+
+  .nodo-strip-head {
+    @apply flex items-center;
+    padding: 0 20px;
+    background: var(--nodo-surface-head);
+    border-right: 1px solid var(--nodo-border);
+    flex-shrink: 0;
+  }
+
+  .nodo-strip-head-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #444;
+    white-space: nowrap;
+  }
+
+  .nodo-strip-body {
+    flex: 1;
+    padding: 14px 20px;
+    background: var(--nodo-surface-body);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nodo-strip-action {
+    @apply flex items-center;
+    padding: 0 22px;
+    border-left: 1px solid var(--nodo-border);
+    background: var(--nodo-surface-body);
+  }
+
+  /* ============================================================
+     10. MODO INDICATOR (punto de color en topbar)
+     ============================================================ */
+
+  .nodo-mode-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .nodo-mode-dot-merchant {
+    background: var(--nodo-merchant-accent);
+  }
+  .nodo-mode-dot-provider {
+    background: var(--nodo-provider-accent);
+  }
+
+  /* ============================================================
+     11. TEXTOS SEMÁNTICOS DE SALDO
+     ============================================================ */
+
+  .nodo-balance-pos {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--nodo-ok-sub);
+  }
+  .nodo-balance-warn {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--nodo-warn-sub);
+  }
+  .nodo-balance-neg {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--nodo-danger-sub);
+  }
+}
